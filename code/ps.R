@@ -55,10 +55,11 @@ if (!file.exists(f_ps)) {
       TRUE ~ "training"
     )) %>%
     select(-t_cv, -s_cv)
-  # df_ps %>%
-  #   ggplot()+
-  #   geom_line(aes(x= date, y = evi, group = id), alpha = 0.2)+
-  #   facet_wrap(.~site)
+
+  df_ps %>%
+    ggplot() +
+    geom_line(aes(x = date, y = evi, group = id, col = tag), alpha = 0.2) +
+    facet_wrap(. ~ site)
   write_csv(df_ps, f_ps)
 } else {
   df_ps <- read_csv(f_ps)

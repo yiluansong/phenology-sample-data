@@ -100,19 +100,19 @@ if (!file.exists(f_met)) {
     )) %>%
     select(-t_cv, -s_cv)
 
-  # df_npn_int %>%
-  #   filter(lubridate::year(date)==2017) %>%
-  #   ggplot()+
-  #   geom_line(aes(x = date, y = status_code, group = id, col = id), alpha = 0.2)+
-  #   facet_wrap(.~event*site)+
-  #   guides(col = "none")
-  #
-  # df_npn_int %>%
-  #   filter(lubridate::year(date)==2017) %>%
-  #   ggplot()+
-  #   geom_line(aes(x = date, y = intensity_code, group = id, col = id), alpha = 0.2)+
-  #   facet_wrap(.~event*site)+
-  #   guides(col = "none")
+  df_npn_int %>%
+    filter(lubridate::year(date) == 2017) %>%
+    ggplot() +
+    geom_line(aes(x = date, y = status_code, group = id, col = id), alpha = 0.2) +
+    facet_wrap(. ~ event * site) +
+    guides(col = "none")
+
+  df_npn_int %>%
+    filter(lubridate::year(date) == 2017) %>%
+    ggplot() +
+    geom_line(aes(x = date, y = intensity_code, group = id, col = id), alpha = 0.2) +
+    facet_wrap(. ~ event * site) +
+    guides(col = "none")
   write_csv(df_npn_int, f_int)
 } else {
   # df_npn_met <- read_csv(f_met)
