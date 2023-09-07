@@ -1,0 +1,39 @@
+﻿file,field,definition,key,unit,format,type,factor_levels,comment
+metadata,site,NEON site code,yes,,,factor,"""HARV""=""Harvard Forest"", ""SJER""=""San Joaquin Experimental Range""",
+metadata,site_lat,latitude of the site,,degree,,numeric,,
+metadata,site_lon,longitude of the site,,degree,,numeric,,
+metadata,id,unique identifier for an individual,yes,,,character,,
+metadata,lat,latitude of the individual,,degree,,numeric,,
+metadata,lon,longitude of the individual,,degree,,numeric,,
+metadata,species,scientific name of the species (or the lowest level taxonomic rank that can be determined),,,,character,,
+metadata,growth_form,growth form classification,,,,character,,
+discrete,site,NEON site code,yes,,,character,,
+discrete,id,unique identifier for an individual,yes,,,character,,
+discrete,date,date,yes,day,YYYY-MM-DD,date,,
+discrete,observer,unique identifier of the person who made the status observation in the field,,,,character,,multiple observer may assess the same individual on the same day
+discrete,phenophase,category of phenophase,,,,factor,"""new leaf"", ""young leaf"", ""full leaf"", ""colored leaf"", ""fallen leaf""","here we use general categories of phenophases, but many slightly different descriptions of the phenophase may be put into the same category, such as ""first leaf,"" ""budburst,"" and ""breaking leaf buds"" were all referred to as ""new leaf"""
+discrete,phenophase_code,code for category of phenophase,,,,factor,"1=""new leaf"", 2=""young leaf"", 3=""full leaf"", 4=""colored leaf"", 5=""fallen leaf""",code reflect the order of phenophases
+discrete,status,status (presence or absence) or the phenophase at the time of observation,,,,factor,"""yes"", ""no""",
+discrete,status_code,code for status (presence or absence) or the phenophase at the time of observation,,,,factor,"1=""yes"", 0=""no""",
+discrete,intensity,intensity category of the phenophase at the time the status observation was made in the field,,,,factor,"""Less than 5%"", ""5-24%"", ""25-49%"", ""50-74%"", ""75-94%"", ""95% or more""","intensity was only reported when status is ""yes,"" but not all ""yes"" status has associated intensity"
+discrete,intensity_code,code for intensity category of the phenophase at the time the status observation was made in the field,,,,factor,"1=""Less than 5%"", 2=""5-24%"", 3=""25-49%"", 4=""50-74%"", 5=""75-94%"", 6=""95% or more""",code reflect the rank of intensity
+discrete,tag,tag for intended use of observation,,,,factor,"""training"", ""validation_temporal"", ""validation_spatial"", ""validation_spatiotemporal""",
+continuous_3m,site,NEON site code,yes,,,character,,
+continuous_3m,id,unique identifier for an individual,yes,,,character,,
+continuous_3m,date,date,yes,day,YYYY-MM-DD,date,,
+continuous_3m,evi,enhanced vegetation index,,,,numeric,,between 0 and 1
+continuous_3m,tag,tag for intended use of observation,,,,factor,"""training"", ""validation_temporal"", ""validation_spatial"", ""validation_spatiotemporal""",
+continuous_500m,site,NEON site code,yes,,,character,,
+continuous_500m,date,date,yes,day,YYYY-MM-DD,date,,
+continuous_500m,evi,enhanced vegetation index,,,,numeric,,between 0 and 1
+continuous_500m,tag,tag for intended use of observation,,,,factor,"""training"", ""validation_temporal"", ""validation_spatial"", ""validation_spatiotemporal""",
+weather,site,NEON site code,yes,,,character,,
+weather,date,date,yes,day,YYYY-MM-DD,date,,
+weather,dayl,day length,,s day-1,,numeric,,
+weather,srad,shortwave radiation flux density,,W m-2,,numeric,,
+weather,tmax,daily maximum air temperature,,degree Celsius,,numeric,,
+weather,tmin,daily minimum air temperature,,degree Celsius,,numeric,,
+weather,temp,daily mean air temperature,,degree Celsius,,numeric,,approximated as the average of tmax and tmin
+weather,prcp,daily total precipitation,,mm day-1,,numeric,,
+weather,swe,snow water equivalent,,kg m-2,,numeric,,the amount of water contained within the snowpack
+weather,vp,daily mean water vapor pressure,,Pa,,numeric,,
