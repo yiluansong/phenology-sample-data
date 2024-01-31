@@ -1,10 +1,12 @@
 ## get NEON individual tree data from NEON portal
 # https://data.neonscience.org/data-products/DP1.10055.001
 # All 47 sites
-# 2017 Jan to 2023 Mar
-# Accessed on Apr 21, 2023
+# 2017 Jan to 2023 Dec
+# Accessed on Jan 23, 2024
 
 f_neon_meta <- str_c(.path$dat, "metadata.csv")
+f_neon_meta_short <- str_c(.path$dat_short, "metadata.csv")
+
 if (!file.exists(f_neon_meta)) {
   phe <- neonUtilities::stackFromStore(
     filepaths = .path$neon,
@@ -15,10 +17,13 @@ if (!file.exists(f_neon_meta)) {
     filter(subtypeSpecification == "primary") %>%
     distinct(site = siteID, plot = plotID, site_lat = decimalLatitude, site_lon = decimalLongitude, id = individualID, species = scientificName, growth_form = growthForm)
 
+  df_neon_plot <- df_neon_meta %>%
+    distinct(site, plot)
+
   ls_df_neon_coord <- vector(mode = "list")
-  for (i in 1:nrow(df_neon_meta)) {
-    siteoi <- df_neon_meta$site[i]
-    plotoi <- df_neon_meta$plot[i]
+  for (i in 1:nrow(df_neon_plot)) {
+    siteoi <- df_neon_plot$site[i]
+    plotoi <- df_neon_plot$plot[i]
     try({ # some coords could not be determined
       ls_df_neon_coord[[siteoi]] <- geoNEON::getLocTOS(
         phe$phe_perindividual %>% filter(plotID == plotoi),
@@ -43,6 +48,7 @@ if (!file.exists(f_neon_meta)) {
     select(site, site_lat, site_lon, id, lat, lon, species, growth_form)
 
   write_csv(df_neon_meta, f_neon_meta)
+  write_csv(df_neon_meta %>% filter(site %in% c("HARV", "SJER")), f_neon_meta_short)
 } else {
   df_neon_meta <- read_csv(f_neon_meta)
 }
