@@ -46,30 +46,33 @@ if (!file.exists(f_neon_meta)) {
   df_neon_meta <- df_neon_meta %>%
     left_join(df_neon_coord, by = c("site", "id")) %>%
     select(site, site_lat, site_lon, id, lat, lon, scientific_name, growth_form)
-    
-  df_neon_taxa <- df_neon_meta %>% 
+
+  df_neon_taxa <- df_neon_meta %>%
     distinct(scientific_name) %>%
     arrange(scientific_name) %>%
     rowwise() %>%
     mutate(
       genus = str_split(scientific_name, " ", simplify = T)[1],
       species = str_split(scientific_name, " ", simplify = T)[2]
-    ) 
-  
+    )
+
   for (i in 1:nrow(df_neon_taxa)) {
     genus <- df_neon_taxa$genus[i]
     species <- df_neon_taxa$species[i]
-    
-    family <- tryCatch({
-      taxize::tax_name(str_c(genus, " ", species), get = "family", db = "ncbi")$family
-    }, error = function(e) {
-      NA
-    })
-    
+
+    family <- tryCatch(
+      {
+        taxize::tax_name(str_c(genus, " ", species), get = "family", db = "ncbi")$family
+      },
+      error = function(e) {
+        NA
+      }
+    )
+
     df_neon_taxa$family[i] <- family
   }
-  
-  df_neon_meta <- df_neon_meta %>% 
+
+  df_neon_meta <- df_neon_meta %>%
     left_join(df_neon_taxa,
       by = "scientific_name"
     )
