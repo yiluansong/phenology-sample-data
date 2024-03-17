@@ -28,8 +28,8 @@ if (!file.exists(f_met)) {
     mutate(site = str_sub(site, 1, 4)) %>%
     filter(id %in% df_neon_meta$id) %>%
     mutate(event = factor(event_code,
-      levels = c(1, 2, 3, 4, 5),
-      labels = c("first_leaf", "young_leaf", "full_leaf", "colored_leaf", "fallen_leaf")
+      levels = c(1, 2, 3, 4, 5, 7, 8),
+      labels = c("first_leaf", "young_leaf", "full_leaf", "colored_leaf", "fallen_leaf", "flower", "pollen")
     )) %>%
     drop_na(event) %>%
     select(site, id, event, event_code, year, first_yes_doy) %>%
@@ -65,7 +65,7 @@ if (!file.exists(f_met)) {
     mutate(date = lubridate::date(str_c(year, "-01-01")) + first_yes_doy - 1) %>%
     ggplot() +
     geom_segment(aes(x = date, xend = date, y = 0, yend = 1, col = id), alpha = 0.2) +
-    facet_wrap(. ~ event * site, nrow = 5) +
+    facet_wrap(. ~ event * site, ncol = 2) +
     guides(col = "none")
 
   write_csv(df_npn_met, f_met)
@@ -85,8 +85,8 @@ if (!file.exists(f_met)) {
     mutate(site = str_sub(site, 1, 4)) %>%
     filter(id %in% df_neon_meta$id) %>%
     mutate(event = factor(event_code,
-      levels = c(1, 2, 3, 4, 5),
-      labels = c("first_leaf", "young_leaf", "full_leaf", "colored_leaf", "fallen_leaf")
+      levels = c(1, 2, 3, 4, 5, 7, 8),
+      labels = c("first_leaf", "young_leaf", "full_leaf", "colored_leaf", "fallen_leaf", "flower", "pollen")
     )) %>%
     drop_na(event) %>%
     mutate(status = factor(status_code, levels = c(0, 1), labels = c("no", "yes"))) %>%
@@ -135,7 +135,7 @@ if (!file.exists(f_met)) {
     filter(lubridate::year(date) == 2017) %>%
     ggplot() +
     geom_line(aes(x = date, y = status_code, group = id, col = id), alpha = 0.2) +
-    facet_wrap(. ~ event * site, nrow = 5) +
+    facet_wrap(. ~ event * site, ncol = 2) +
     guides(col = "none")
 
   write_csv(df_npn_sta, f_sta)
@@ -150,7 +150,7 @@ if (!file.exists(f_met)) {
     filter(lubridate::year(date) == 2017) %>%
     ggplot() +
     geom_line(aes(x = date, y = intensity_code, group = id, col = id), alpha = 0.2) +
-    facet_wrap(. ~ event * site, nrow = 5) +
+    facet_wrap(. ~ event * site, ncol = 2) +
     guides(col = "none")
 
   write_csv(df_npn_int, f_int)
